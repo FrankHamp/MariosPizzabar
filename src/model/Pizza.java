@@ -2,7 +2,7 @@ package model;
 
 // Skabelon for klassen
 public class Pizza {
-    // encapsulation. Det er vigtigt så prisen ikke kan ændres udefra (but y'all already kno' that)
+    // encapsulation. Det er vigtigt så prisen ikke kan ændres udefra
     private int number;
     private String name;
     private String description;
@@ -16,7 +16,7 @@ public class Pizza {
         this.price = price;
     }
 
-    // Real go Getters, de tillader andre klasser at tilgå værdien fra private uden det kan ændres
+    // Getters, de tillader andre klasser at tilgå værdien fra private uden det kan ændres
     public int getNumber() {
         return number;
     }
@@ -33,7 +33,7 @@ public class Pizza {
         return price;
     }
 
-    //Set trippin' Setters, de ændre private felter på en kontrolleret måde.
+    // Setters, de ændre private felter på en kontrolleret måde.
     public void setNumber(int number) {
         this.number = number;
     }
@@ -50,7 +50,7 @@ public class Pizza {
         this.price = price;
     }
 
-    // Overrider og laver en ny version af to string Method(Man)
+    // Overrider og laver en ny version af to string Method
     @Override
     // to string gør det lettere at læse så man ikke får hexadecimal
     public String toString() {
