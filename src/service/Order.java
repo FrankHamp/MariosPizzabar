@@ -72,6 +72,6 @@ public class Order {
                 " | Afhentning: " + pickupTime.format(DateTimeFormatter.ofPattern("HH:mm")) +
                 " | Kunde: " + customer.getCustomerName() +
                 " | Status: " + status +
-                " | Total: " + calculateTotalPrice() + "kr";;
+                " | Total: " + calculateTotalPrice() + "kr";
     }
 }
