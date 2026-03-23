@@ -195,6 +195,7 @@ printer hele pizza-menuen
 
         }
 
+
         private void clearOrder() {
 
         }
