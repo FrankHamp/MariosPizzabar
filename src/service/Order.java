@@ -30,7 +30,7 @@ public class Order {
 
         for (Pizza p : pizzaOrders) {
             if (p != null) {            //Hvis p ikke returnere null
-                total += getPrice();    // så plusser vi total der er 0 med pizzaens pris med getPrice() fra Pizza Klassen.
+                total += p.getPrice();    // så plusser vi total der er 0 med pizzaens pris med getPrice() fra Pizza Klassen.
             }
         }                               // returnere totalprisen og ganger den med rabat fra customerType
         return total * (1 - customer.getDiscountRate());
