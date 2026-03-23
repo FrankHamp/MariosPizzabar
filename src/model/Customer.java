@@ -15,11 +15,11 @@ Hvis Alfonso ikke udfylder et navn, vil programmet bede ham om at udfylde et nav
         this.customerName = customerName.trim();
     }
 
-    public String getCustomerName;{
+    public String getCustomerName() {
         return customerName; }
 
 
-    //Henter rabatten fra subklassern - bliver derefter regnet ud i Order
+    //Henter rabatten fra subklasserne - bliver derefter regnet ud i Order
 public abstract double getDiscountRate();
 
 
