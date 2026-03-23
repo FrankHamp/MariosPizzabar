@@ -26,13 +26,13 @@ public class Order {
 
     //Metode til at beregne den totale pris
     public double calculateTotalPrice() {
-        double total = 0; //initialiserer en double vi kalder total der starter på 0
+        double total = 0;               //initialiserer en double vi kalder total der starter på 0
 
         for (Pizza p : pizzaOrders) {
-            if (p != null) { //Hvis p ikke returnere null
-                total += getPrice(); // så pluser vi total der er 0 med pizzaens pris med getPrice() fra Pizza Klassen.
+            if (p != null) {            //Hvis p ikke returnere null
+                total += getPrice();    // så plusser vi total der er 0 med pizzaens pris med getPrice() fra Pizza Klassen.
             }
-        } // returnere totalprisen og ganger den med rabat fra customerType
+        }                               // returnere totalprisen og ganger den med rabat fra customerType
         return total * (1 - customer.getDiscountRate());
     }
 
