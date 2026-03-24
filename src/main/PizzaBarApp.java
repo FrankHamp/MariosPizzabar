@@ -7,6 +7,6 @@ public class PizzaBarApp {
 
         PizzaBarUI ui = new PizzaBarUI();
 
-        ui.run();
+        ui.start();
     }
 }
