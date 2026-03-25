@@ -1,59 +1,45 @@
 package ui;
+
 import model.*;
-import file.*;
+import service.Order;
+import service.OrderHandler;
+import util.ExceptionHandler;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import service.*;
 
-import java.util.ArrayList;
-
-/* + void start()
-- Greeting
-+ void ShowInterface
-+ void addOrder()
-printer hele pizza-menuen
-
---------------------------------
-+ void removeOrder()
-+ void showOrder()
-+ void clearOrder()
---------------------------------
-
-- ArrayList<Pizza> menuItems
-- ArrayList<Order> activeOrders
-- Scanner scanner
-- OrderFileHandler fileHandler
-
-+ void exitProgram() */
 
 public class PizzaBarUI {
 
     private ArrayList<Pizza> menuItems = new ArrayList<>();
-    //læser items fra marius' tekstfil og smider hver linje ind i et arraylist
-    private ArrayList<Order[]> activeOrders = new ArrayList<>();
+
+    private OrderHandler orderHandler = new OrderHandler();
     private Scanner scanner;
-    private OrderHandler fileHandler;
-
-
-
-
-    public PizzaBarUI() {
-        scanner = new Scanner(System.in);
-        fileHandler = new OrderHandler();
-    }
 
     public void start() {
+
+        loadMenu();
 
         boolean running = true;
 
         while (running) {
 
-            showInterface();
+            System.out.println("\n=== Marios Pizzabar ===");
+            System.out.println("1. Show menu");
+            System.out.println("2. Add order");
+            System.out.println("3. Show orders");
+            System.out.println("4. Complete order");
+            System.out.println("5. Remove order");
+            System.out.println("6. Show specific order");
+            System.out.println("7. Clear Order");
+            System.out.println("8. Exit");
 
             try {
 
@@ -62,113 +48,306 @@ public class PizzaBarUI {
                 switch (choice) {
 
                     case 1:
-                        addOrder();
+                        showMenu();
                         break;
 
                     case 2:
-                        removeOrder();
+                        addOrder();
                         break;
 
                     case 3:
-                        showOrder();
+                        showOrders();
                         break;
 
                     case 4:
-                        clearOrder();
+                        completeOrder();
                         break;
 
                     case 5:
-                        exitProgram();
+                        removeOrder();
                         break;
 
+                    case 6:
+                        showOrder();
+                        break;
+
+                    case 7:
+                        clearOrders();
+                        break;
+
+                    case 8:
+                        exitProgram();
+                        running = false;
+                        break;
                 }
 
-            }
-            catch() {
-                //lav errorhandler senere
+            } catch (InputMismatchException e ) {
+                ExceptionHandler.handleInputMismatch(e);
+                scanner.nextLine();
             }
         }
     }
+// er loadMenu ikke overflødig, når der er noget lignende i selectPizzas?
+    private void loadMenu() {
 
-    public void showInterface() {
+        // Hardkodet menu da Mario ikke har en fil endnu
 
-        System.out.println("\nVelkommen Alfonzo!");
-        System.out.println("1. Tilføj ordre");
-        System.out.println("2. Fjern ordre(r)");
-        System.out.println("3. vis ordre(r)");
-        System.out.println("4. ryd ordrer");
-        System.out.println("5. Afbryd");
+        menuItems.add(new Pizza(1, "Margherita", "Klassisk tomat og mozzarella", 89.0));
+
+        menuItems.add(new Pizza(2, "Pepperoni", "Krydret med pepperoni", 99.0));
+
+        menuItems.add(new Pizza(3, "Quattro Formaggi", "Fire oste", 109.0));
+
+        menuItems.add(new Pizza(4, "Hawaii", "Skinke og ananas", 95.0));
+
     }
 
-    private void showMenu() {
+    public void showMenu() {
 
-        //skal muligvis laves om -------------------
-        String filePath = "menukort.csv";
-        String line;
+        System.out.println("\n=== Menu ===");
+
+        for (Pizza pizza : menuItems) {
+
+            System.out.println(pizza.toString());
+
+        }
+
+    }
+
+    public void addOrder() {
+
+        // Kundenavn
+
+        System.out.println("\nEnter customer name:");
+
+        String customerName = scanner.nextLine();
+
+        // Kundetype
+
+        Customer customer = selectCustomerType(customerName);
+
+        // Vælg pizzaer
+
+        Pizza[] pizzaOrders = selectPizzas();
+
+        // Afhentingstidspunkt
+
+        LocalDateTime pickupTime = selectPickupTime();
+
+        // Opret ordre via OrderHandler
+
+        orderHandler.addOrder(pizzaOrders, customer, pickupTime);
+
+        System.out.println("Order added successfully!");
+
+    }
+
+    private Customer selectCustomerType(String customerName) {
+
+        System.out.println("\nSelect customer type:");
+
+        System.out.println("1. Normal Customer (no discount)");
+
+        System.out.println("2. VIP Customer (10% discount)");
+
+        System.out.println("3. Employee Customer (20% discount)");
+
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
 
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+
+                case 1:
+                    return new VIPCustomer(customerName);
+
+                case 2:
+                    return new EmployeeCustomer(customerName);
+
+                case 3:
+                    return new NormalCustomer(customerName);
+            }
+        } catch (InputMismatchException e) {
+            ExceptionHandler.handleInputMismatch(e);
+
+        }
+        return null;
+    }
+
+    private Pizza[] selectPizzas() {
+        int count = 0;
+
+        try {
+            FileReader reader = new FileReader("menu");
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("menu"));
+
+            String line = bufferedReader.readLine();
+            while (line != null) {
+                count++;
+                line = bufferedReader.readLine();
             }
 
-            // midlertidig Error ---------------------
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            reader.close();
+
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            ExceptionHandler.handleIO(e);
+        }
+
+
+     //
+        Pizza[] pizzaOrders = new Pizza[];
+
+
+        showMenu();
+
+        System.out.println("\nEnter pizza number (0 to finish):");
+
+        while (count < pizzaOrders.length) {
+
+            int pizzaNumber = scanner.nextInt();
+
+            if (pizzaNumber == 0) break;
+
+            Pizza selected = findPizza(pizzaNumber);
+
+            if (selected != null) {
+
+                pizzaOrders[count] = selected;
+
+                count++;
+
+                System.out.println("Added: " + selected.getName() + " - " + selected.getPrice() + "kr");
+
+            } else {
+
+                ExceptionHandler.handleInputMismatch(String.valueOf(pizzaNumber));
+
+            }
+
+        }
+
+        return pizzaOrders;
+
+    }
+
+    private Pizza findPizza(int pizzaNumber) {
+
+        for (Pizza pizza : menuItems) {
+
+            if (pizza.getNumber() == pizzaNumber) { // bruger getNumber() fra Pizza klassen
+
+                return pizza;
+
+            }
+
+        }
+
+        return null;
+
+    }
+
+    private LocalDateTime selectPickupTime() {
+
+        System.out.println("Enter pickup hour (HH):");
+
+        int hour = scanner.nextInt();
+
+        System.out.println("Enter pickup minute (MM):");
+
+        int minute = scanner.nextInt();
+
+        return LocalDateTime.of(
+
+                LocalDateTime.now().toLocalDate(),
+
+                LocalTime.of(hour, minute)
+        );
+
+    }
+
+    public void showOrders() {
+
+        orderHandler.sortOrdersByTime();
+
+        ArrayList<Order> activeOrders = orderHandler.getActiveOrders();
+
+        if (activeOrders.isEmpty()) {
+
+            System.out.println("\nNo active orders.");
+
+            return;
+
+        }
+
+        System.out.println("\n=== Active Orders ===");
+
+        for (Order order : activeOrders) {
+
+            System.out.println(order.toString());
+
         }
 
     }
 
-    private void addOrder() {
+    public void removeOrder() {
 
-        try {
+        System.out.println("Enter order ID to remove:");
 
-            showMenu();
+        int orderID = scanner.nextInt();
 
-            System.out.print("Hvor mange pizzaer vil du købe?");
-            int numberOfPizzas = scanner.nextInt();
-            scanner.nextLine();
+        orderHandler.removeOrder(orderID);
 
+        System.out.println("Order #" + orderID + " removed.");
 
+    }
 
-            /* System.out.println("Hvor mange pizzaer vil du bestille?");
-            int antalPizzaer = scanner.nextInt();
-            Pizza[] numberOfPizzas = menuItems.toArray(new Pizza[antalPizzaer]);
-             //= menuItems.toArray(new Pizza[antalPizzaer]);
+    public void completeOrder() {
 
-            /* for (int i = 0; i < numberOfCats; i++) {
-            System.out.print("Enter name for cat " + (i + 1) + ": ");
-            String name = scanner.nextLine();
-            cats[i] = new Cat(name); */
+        System.out.println("Enter order ID to complete:");
 
-            activeOrders.add(new Order[0]);
+        int orderID = scanner.nextInt();
 
-        } catch (Exception e) { //----------------------
-            throw new RuntimeException(e);
+        orderHandler.completeOrder(orderID);
+
+        System.out.println("Order #" + orderID + " completed and saved.");
+
+    }
+
+    public void showOrder() {
+
+        System.out.println("Enter order ID to show:");
+
+        int orderID = scanner.nextInt();
+
+        for (Order order : orderHandler.getActiveOrders()) {
+
+            if (order.getOrderID() == orderID) {
+
+                System.out.println(order);
+
+                return;
+
+            }
+
         }
 
-    }
-
-    private void removeOrder() {
-
+        ExceptionHandler.handleOrderNotFound(orderID);
 
     }
 
-    private void showOrder() {
+    public void clearOrders() {
+
+        orderHandler.getActiveOrders().clear();
+
+        System.out.println("All orders cleared.");
 
     }
 
-    private void clearOrder() {
+    public void exitProgram() {
+
+        System.out.println("Goodbye!");
 
     }
-
-    private void exitProgram() {
-
-    }
-
-
 
 }
