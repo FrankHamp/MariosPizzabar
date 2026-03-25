@@ -33,7 +33,7 @@ public class OrderHandler {
         if (completedOrder != null) {
             completedOrder.setStatus(OrderStatus.ORDER_COMPLETED);
             completedOrders.add(completedOrder);
-           // FileHandler.saveOrderToFile(completedOrder);
+           FileHandler.saveOrderToFile(completedOrder);
         }
     }
 
