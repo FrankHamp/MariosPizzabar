@@ -66,6 +66,15 @@ public class Order {
         return status;
     }
 
+    public String toCSV(){
+        return "orderID + \",\" +\n" +
+                "           pickupTime.format(DateTimeFormatter.ofPattern(\"HH:mm\")) + \",\" +\n" +
+                "           customer.getCustomerName() + \",\" +\n" +
+                "           customer.getClass().getSimpleName() + \",\" +\n" +
+                "           status + \",\" +\n" +
+                "           calculateTotalPrice()";
+    }
+
     @Override
     public String toString() {
         return  "Ordre #" + orderID +
