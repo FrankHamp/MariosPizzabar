@@ -75,4 +75,20 @@ public class ExceptionHandler {
             ExceptionHandler.handleInvalidInput("Feltet kan ikke være tomt, prøv igen: ");
         }
     }
+
+    public static void handleInputMismatch(String input) {
+        System.out.println("Fejl: " + input + " er ikke tilladt");
+
+    }
+
+    public static void handleInputMismatch(InputMismatchException e) {
+        System.out.println("Fejl: Ugyldig input");
+
+    }
+
+    public static void handleIO(IOException e) {
+        System.out.println("Fejl: filen du søger eksisterer ikke");
+    }
+
+
 }

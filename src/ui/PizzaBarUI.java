@@ -91,6 +91,14 @@ public class PizzaBarUI {
             default: return new NormalCustomer(customerName);
         }
     }
+// er loadMenu ikke overflødig, når der er noget lignende i selectPizzas?
+    private void loadMenu() {
+
+        // Hardkodet menu da Mario ikke har en fil endnu
+
+        menuItems.add(new Pizza(1, "Margherita", "Klassisk tomat og mozzarella", 89.0));
+
+        menuItems.add(new Pizza(2, "Pepperoni", "Krydret med pepperoni", 99.0));
 
     private Pizza[] selectPizzas() {
         Pizza[] pizzaOrders = new Pizza[10];
