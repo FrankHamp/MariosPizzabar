@@ -1,6 +1,8 @@
+# Marios Pizzabar
 
-Projektets struktur:
+## Projektstruktur
 
+```
 MariosPizzabar
 │
 ├── main
@@ -28,3 +30,4 @@ MariosPizzabar
       ErrorHandler.java
       ExceptionHandler.java
       Comparators.java
+```
