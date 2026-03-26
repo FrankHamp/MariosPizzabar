@@ -3,8 +3,7 @@ package ui;
 import model.*;
 import service.Order;
 import service.OrderHandler;
-import util.ExceptionHandler;
-import util.ExceptionHandler;
+import util.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ public class PizzaBarUI {
     private OrderHandler orderHandler = new OrderHandler();
 
     public void start() {
-        loadMenu();
+        System.out.println(menuItems);
         boolean running = true;
 
         while (running) {
@@ -28,7 +27,7 @@ public class PizzaBarUI {
             System.out.println("6. Show specific order");
             System.out.println("7. Exit");
 
-            int choice = ExceptionHandler.readInt();
+            int choice = ErrorHandler.readInt();
 
             switch (choice) {
                 case 1: showMenu(); break;
@@ -43,13 +42,6 @@ public class PizzaBarUI {
         }
     }
 
-    private void loadMenu() {
-        // Hardkodet menu da Mario ikke har en fil endnu
-        menuItems.add(new Pizza(1, "Margherita", "Klassisk tomat og mozzarella", 89.0));
-        menuItems.add(new Pizza(2, "Pepperoni", "Krydret med pepperoni", 99.0));
-        menuItems.add(new Pizza(3, "Quattro Formaggi", "Fire oste", 109.0));
-        menuItems.add(new Pizza(4, "Hawaii", "Skinke og ananas", 95.0));
-    }
 
     public void showMenu() {
         System.out.println("\n=== Menu ===");
@@ -61,7 +53,7 @@ public class PizzaBarUI {
     public void addOrder() {
         // Kundenavn
         System.out.println("\nEnter customer name:");
-        String customerName = ExceptionHandler.readString();
+        String customerName = ErrorHandler.readString();
 
         // Kundetype
         Customer customer = selectCustomerType(customerName);
@@ -83,7 +75,7 @@ public class PizzaBarUI {
         System.out.println("2. VIP Customer (10% discount)");
         System.out.println("3. Employee Customer (20% discount)");
 
-        int choice = ExceptionHandler.readInt();
+        int choice = ErrorHandler.readInt();
 
         switch (choice) {
             case 2: return new VIPCustomer(customerName);
@@ -92,57 +84,58 @@ public class PizzaBarUI {
         }
     }
 // er loadMenu ikke overflødig, når der er noget lignende i selectPizzas?
+
     private void loadMenu() {
+        FileHandler fileHandler = new FileHandler();
+        menuItems = fileHandler.loadMenu();
+    }
 
-        // Hardkodet menu da Mario ikke har en fil endnu
+    private Pizza[] selectPizzas () {
 
-        menuItems.add(new Pizza(1, "Margherita", "Klassisk tomat og mozzarella", 89.0));
+        //måske ikke menuItems
+            Pizza[] pizzaOrders = new Pizza[10];
+            int count = 0;
 
-        menuItems.add(new Pizza(2, "Pepperoni", "Krydret med pepperoni", 99.0));
+            showMenu();
+            System.out.println("\nEnter pizza number (0 to finish):");
 
-    private Pizza[] selectPizzas() {
-        Pizza[] pizzaOrders = new Pizza[10];
-        int count = 0;
+            while (count < pizzaOrders.length) {
+                int pizzaNumber = ErrorHandler.readInt();
+                if (pizzaNumber == 0) break;
 
-        showMenu();
-        System.out.println("\nEnter pizza number (0 to finish):");
-
-        while (count < pizzaOrders.length) {
-            int pizzaNumber = ExceptionHandler.readInt();
-            if (pizzaNumber == 0) break;
-
-            Pizza selected = findPizza(pizzaNumber);
-            if (selected != null) {
-                pizzaOrders[count] = selected;
-                count++;
-                System.out.println("Added: " + selected.getName() + " - " + selected.getPrice() + "kr");
-            } else {
-                ExceptionHandler.handleInvalidInput(String.valueOf(pizzaNumber));
+                Pizza selected = findPizza(pizzaNumber);
+                if (selected != null) {
+                    pizzaOrders[count] = selected;
+                    count++;
+                    System.out.println("Added: " + selected.getName() + " - " + selected.getPrice() + "kr");
+                } else {
+                    ExceptionHandler.handleInvalidInput(String.valueOf(pizzaNumber));
+                }
             }
+            return pizzaOrders;
         }
-        return pizzaOrders;
+
+        private Pizza findPizza ( int pizzaNumber) {
+
+                for (Pizza pizza : menuItems) {
+                    if (pizza.getNumber() == pizzaNumber) { // bruger getNumber() fra Pizza klassen
+                        return pizza;
+                    }
+                }
+                return null;
     }
 
-    private Pizza findPizza(int pizzaNumber) {
-        for (Pizza pizza : menuItems) {
-            if (pizza.getNumber() == pizzaNumber) { // bruger getNumber() fra Pizza klassen
-                return pizza;
-            }
+        private LocalDateTime selectPickupTime () {
+            System.out.println("Enter pickup hour (HH):");
+            int hour = ErrorHandler.readInt();
+            System.out.println("Enter pickup minute (MM):");
+            int minute = ErrorHandler.readInt();
+
+            return LocalDateTime.of(
+                    LocalDateTime.now().toLocalDate(),
+                    LocalTime.of(hour, minute)
+            );
         }
-        return null;
-    }
-
-    private LocalDateTime selectPickupTime() {
-        System.out.println("Enter pickup hour (HH):");
-        int hour = ExceptionHandler.readInt();
-        System.out.println("Enter pickup minute (MM):");
-        int minute = ExceptionHandler.readInt();
-
-        return LocalDateTime.of(
-                LocalDateTime.now().toLocalDate(),
-                LocalTime.of(hour, minute)
-        );
-    }
 
     public void showOrders() {
         orderHandler.sortOrdersByTime();
@@ -161,21 +154,21 @@ public class PizzaBarUI {
 
     public void removeOrder() {
         System.out.println("Enter order ID to remove:");
-        int orderID = ExceptionHandler.readInt();
+        int orderID = ErrorHandler.readInt();
         orderHandler.removeOrder(orderID);
         System.out.println("Order #" + orderID + " removed.");
     }
 
     public void completeOrder() {
         System.out.println("Enter order ID to complete:");
-        int orderID = ExceptionHandler.readInt();
+        int orderID = ErrorHandler.readInt();
         orderHandler.completeOrder(orderID);
         System.out.println("Order #" + orderID + " completed and saved.");
     }
 
     public void showOrder() {
         System.out.println("Enter order ID to show:");
-        int orderID = ExceptionHandler.readInt();
+        int orderID = ErrorHandler.readInt();
 
         for (Order order : orderHandler.getActiveOrders()) {
             if (order.getOrderID() == orderID) {
