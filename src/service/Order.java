@@ -76,7 +76,7 @@ public class Order {
 
         return "Ordre #" + ";" + orderID + ";" + "Afhentningstidspunkt:" + ";" +
                 pickupTime.format(DateTimeFormatter.ofPattern("HH:mm")) + ";" + "Kundenavn:" + ";" +
-                customer.getCustomerName() + ";" + "Status:" + ";" +
+                customer.getCustomerName() + ";" + "Rabat i %" + ";" + customer.getDiscountRate()*100 + ";" + "Status:" + ";" +
                 status + ";" + "Totalpris:" + ";" +
                 calculateTotalPrice() + ";" + "Bestilte Pizzaer" + ";" +
                 pizzaList;

@@ -27,7 +27,8 @@ public class PizzaBarUI {
             System.out.println("4. Færdiggør Ordre");
             System.out.println("5. Fjern Ordre");
             System.out.println("6. Vis en specifik ordre");
-            System.out.println("7. Afslut");
+            System.out.println("7. Vis færdiggjorte ordre");
+            System.out.println("8. Afslut");
 
             int choice = ErrorHandler.readInt();
 
@@ -38,7 +39,8 @@ public class PizzaBarUI {
                 case 4: completeOrder(); break;
                 case 5: removeOrder(); break;
                 case 6: showOrder(); break;
-                case 7: exitProgram(); running = false; break;
+                case 7: showCompleteOrders(); break;
+                case 8: exitProgram(); running = false; break;
                 default: ExceptionHandler.handleInvalidInput(String.valueOf(choice));
             }
         }
@@ -85,8 +87,8 @@ public class PizzaBarUI {
             default: return new NormalCustomer(customerName);
         }
     }
-// er loadMenu ikke overflødig, når der er noget lignende i selectPizzas?
 
+    // Metode til at loade vores menu fra tekstfil med fileHandler.
     private void loadMenu() {
         FileHandler fileHandler = new FileHandler();
         menuItems = fileHandler.loadMenu();
@@ -122,7 +124,7 @@ public class PizzaBarUI {
 
 
 
-
+//      Midlertidigt fast array indtil vi får FileHandler og tekstfiler op og køre.
 //    private Pizza[] selectPizzas () {
 //
 //        //måske ikke menuItems
@@ -188,8 +190,10 @@ public class PizzaBarUI {
     public void removeOrder() {
         System.out.println("Indtast det ordre ID du vil fjerne");
         int orderID = ErrorHandler.readInt();
-        orderHandler.removeOrder(orderID);
-        System.out.println("Order #" + orderID + " removed.");
+        Order removed = orderHandler.removeOrder(orderID);
+        if (removed != null) {
+            System.out.println("Ordre #" + orderID + " fjernet.");
+        }
     }
 
     public void completeOrder() {
@@ -210,6 +214,23 @@ public class PizzaBarUI {
             }
         }
         ExceptionHandler.handleOrderNotFound(orderID);
+    }
+
+    // Viser ekspederede ordre
+    // (Lav om til at læse fra tekstfil hvis der er tid - "NiceToHave" ikke must have)
+    public void showCompleteOrders() {
+        ArrayList<Order> completedOrders = orderHandler.getCompletedOrders();
+
+        if (completedOrders.isEmpty()) {
+            System.out.println("\nIngen ekspederede ordrer.");
+            return;
+        }
+
+        System.out.println("\n=== Ekspederede ordrer ===");
+        for (Order order : completedOrders) {
+            System.out.println(order.toString());
+        }
+
     }
 
     public void clearOrders() {

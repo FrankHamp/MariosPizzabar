@@ -19,8 +19,8 @@ Hvis Alfonso ikke udfylder et navn, vil programmet bede ham om at udfylde et nav
         return customerName; }
 
 
+
     //Henter rabatten fra subklasserne - bliver derefter regnet ud i Order
 public abstract double getDiscountRate();
-
 
 }
