@@ -72,7 +72,7 @@ public class FileHandler {
 
 
                 // Splitter linjerne med comma ind i et array af strings
-                String[] parts = line.split(",");
+                String[] parts = line.split(";");
 
 
                 // Parser pizzanummeret fra det første element, og trimmer det (Fjerner alle unødvendige mellemrum)

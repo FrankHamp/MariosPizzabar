@@ -1,0 +1,34 @@
+1;Vesuvio;Tomatsauce - ost skinke og oregano;75.0
+2;Amerikaner;Tomatsauce - ost oksefars og oregano;80.0
+3;Cacciatore;Tomatsauce - ost pepperoni;78.0
+4;Carbona;Tomatsauce - ost;70.0
+5;Dennis;Tomatsauce - ost skinke pepperoni cocktailpølser og oregano;90.0
+6;Bertil;Tomatsauce - ost bacon og oregano;78.0
+7;Silvia;Tomatsauce - ost pepperoni rød peber løg oliven og oregano;85.0
+8;Victoria;Tomatsauce - ost ananas champignon løg og oregano;82.0
+9;Toronfo;Tomatsauce - ost skinke bacon kebab chili og oregano;95.0
+10;Capricciosa;Tomatsauce - ost skinke champignon og oregano;80.0
+11;Hawaii;Tomatsauce - ost skinke ananas og oregano;78.0
+12;Le blissola;Tomatsauce - ost skinke rejer og oregano;88.0
+13;Venezia;Tomatsauce - ost skinke bacon og oregano;85.0
+14;Mafia;Tomatsauce - ost pepperoni bacon løg og oregano;88.0
+15;Milano;Tomatsauce - ost skinke champignon løg og oregano;85.0
+16;Napoli;Tomatsauce - ost ansjoser oliven og oregano;82.0
+17;Roma;Tomatsauce - ost skinke bacon æg og oregano;88.0
+18;Palermo;Tomatsauce - ost pepperoni chili og oregano;80.0
+19;Firenze;Tomatsauce - ost kylling champignon og oregano;85.0
+20;Bologna;Tomatsauce - ost oksekød løg og oregano;85.0
+21;Calzone;Tomatsauce - ost skinke champignon (indbagt);88.0
+22;Messina;Tomatsauce - ost tun løg og oregano;85.0
+23;Sicilia;Tomatsauce - ost pepperoni oliven løg og oregano;85.0
+24;Torino;Tomatsauce - ost skinke kebab dressing og oregano;90.0
+25;Viking;Tomatsauce - ost bacon kebab løg og oregano;92.0
+26;Nordic;Tomatsauce - ost kylling ananas og oregano;85.0
+27;BBQ Special;Tomatsauce - ost kylling bacon BBQ-sauce og oregano;90.0
+28;Hot Chili;Tomatsauce - ost pepperoni chili jalapenos og oregano;85.0
+29;Green Garden;Tomatsauce - ost champignon peberfrugt løg oliven og oregano;80.0
+30;Sea Deluxe;Tomatsauce - ost rejer tun hvidløg og oregano;90.0
+31;Chicken Curry;Tomatsauce - ost kylling karry og løg;85.0
+32;Spicy Kebab;Tomatsauce - ost kebab chili løg og oregano;88.0
+33;Farmer;Tomatsauce - ost bacon kartoffel løg og oregano;82.0
+34;Cheese Lover;Tomatsauce - ost mozzarella cheddar gorgonzola og oregano;90.0

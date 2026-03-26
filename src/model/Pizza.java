@@ -54,6 +54,6 @@ public class Pizza {
     @Override
     // to string gør det lettere at læse så man ikke får hexadecimal
     public String toString() {
-        return "#" + number + "" + name + ": " + description + "......" + price + " kr.";
+        return "#" + number + " " + name + ": " + description + "......" + price + " kr.";
     }
 }
