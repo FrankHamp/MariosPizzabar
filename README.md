@@ -3,7 +3,7 @@
 ## Projektbeskrivelse
 
 Marios Pizzabar er et Java-baseret bestillingssystem udviklet til Mario, der driver en lille pizzabar på Nørrebrogade.
-Systemet er udviklet som et 1. semester projekt på datamatikeruddannelsen.
+Systemet er udviklet på 1. semester projekt på datamatikeruddannelsen.
 
 Systemet kører lokalt og offline på Marios Dell-laptop og håndterer følgende:
 
