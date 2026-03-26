@@ -1,0 +1,12 @@
+orderID + ";" +
+           pickupTime.format(DateTimeFormatter.ofPattern("HH:mm")) + ";" +
+           customer.getCustomerName() + ";" +
+           customer.getClass().getSimpleName() + ";" +
+           status + ";" +
+           calculateTotalPrice()
+orderID + ";" +
+           pickupTime.format(DateTimeFormatter.ofPattern("HH:mm")) + ";" +
+           customer.getCustomerName() + ";" +
+           customer.getClass().getSimpleName() + ";" +
+           status + ";" +
+           calculateTotalPrice()

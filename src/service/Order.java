@@ -66,13 +66,20 @@ public class Order {
         return status;
     }
 
-    public String toCSV(){
-        return "orderID + \",\" +\n" +
-                "           pickupTime.format(DateTimeFormatter.ofPattern(\"HH:mm\")) + \",\" +\n" +
-                "           customer.getCustomerName() + \",\" +\n" +
-                "           customer.getClass().getSimpleName() + \",\" +\n" +
-                "           status + \",\" +\n" +
-                "           calculateTotalPrice()";
+    public String toCSV() {
+        String pizzaList = "";
+        for (Pizza p : pizzaOrders) {
+            if (p != null) {
+                pizzaList += p.getName() + " ";
+            }
+        }
+
+        return "Ordre #" + ";" + orderID + ";" + "Afhentningstidspunkt:" + ";" +
+                pickupTime.format(DateTimeFormatter.ofPattern("HH:mm")) + ";" + "Kundenavn:" + ";" +
+                customer.getCustomerName() + ";" + "Status:" + ";" +
+                status + ";" + "Totalpris:" + ";" +
+                calculateTotalPrice() + ";" + "Bestilte Pizzaer" + ";" +
+                pizzaList;
     }
 
     @Override
