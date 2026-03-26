@@ -107,8 +107,6 @@ Repræsenterer en pizza på menukortet med nummer, navn, beskrivelse og pris. In
 #### `OrderStatus` *(enum)*
 Definerer de mulige tilstande en ordre kan befinde sig i:
 - `ORDER_PLACED` — ordre er oprettet
-- `ORDER_IN_PROGRESS` — ordre er under tilberedning
-- `ORDER_READY_FOR_PICKUP` — ordre er klar til afhentning
 - `ORDER_COMPLETED` — ordre er afhentet og betalt
 
 ---
