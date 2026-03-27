@@ -3,6 +3,7 @@ package service;
 import file.FileHandler;
 import model.*;
 import util.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -14,6 +15,13 @@ public class OrderHandler {
     private Comparators comparator = new Comparators();
 
     public void addOrder(Pizza[] pizzaOrders, Customer customer, LocalDateTime pickupTime) {
+        // Tjek om der rent faktisk er bestilt pizzaer (validering)
+        if (pizzaOrders == null || pizzaOrders.length <= 0) {
+            System.out.println("FEJL: Kan ikke oprette ordre med 0 eller færre pizzaer!");
+
+            return; // Stopper metoden her, så vi ikke crasher programmet
+        }
+
         Order newOrder = new Order(nextOrderID++, pickupTime, pizzaOrders, customer, OrderStatus.ORDER_PLACED);
         activeOrders.add(newOrder);
     }
@@ -33,7 +41,7 @@ public class OrderHandler {
         if (completedOrder != null) {
             completedOrder.setStatus(OrderStatus.ORDER_COMPLETED);
             completedOrders.add(completedOrder);
-           FileHandler.saveOrderToFile(completedOrder);
+            FileHandler.saveOrderToFile(completedOrder);
         }
     }
 
@@ -42,6 +50,11 @@ public class OrderHandler {
     }
 
     // Getters
-    public ArrayList<Order> getActiveOrders() { return activeOrders; }
-    public ArrayList<Order> getCompletedOrders() { return completedOrders; }
+    public ArrayList<Order> getActiveOrders() {
+        return activeOrders;
+    }
+
+    public ArrayList<Order> getCompletedOrders() {
+        return completedOrders;
+    }
 }
