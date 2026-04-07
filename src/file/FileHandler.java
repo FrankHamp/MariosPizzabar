@@ -71,7 +71,7 @@ public class FileHandler {
                 if (line.isBlank()) continue;
 
 
-                // Splitter linjerne med comma ind i et array af strings
+                // Splitter linjerne med semicolon ind i et array af strings
                 String[] parts = line.split(";");
 
 
@@ -108,7 +108,7 @@ public class FileHandler {
     }
 
 
-    // Indlæser alle gemte odrer fra vores CSV fil som strings
+    // Indlæser alle gemte ordrer fra vores CSV fil som strings
     public static ArrayList<String> loadStats() {
 
 
@@ -122,11 +122,11 @@ public class FileHandler {
 
             //Læser filen linje for linje
             while (scanner.hasNextLine()) {
-                // Reads the next line
+                // Læser næste linje
                 String line = scanner.nextLine();
-                // Skips empty lines
+                // Skipper tomme linjer
                 if (!line.isBlank()) {
-                    // Adds the line to the stats list
+                    // Tilføjer linje til stats listen (Listen af ordre).
                     stats.add(line);
                 }
             }
